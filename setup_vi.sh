@@ -27,14 +27,17 @@ else
 fi
 # Checks to ensure the setup can proceed with root privileges
 echo "This setup process requires administrative access. You'll be prompted for your password through the setup process."
+echo ""
 sleep 1
 sudo -v || { echo " Authentication failed. Exiting."; exit 1; }
 echo "Updating package lists and upgrading installed packages..."
+echo ""
 # Update the package list and upgrade installed packages
 sudo apt update && sudo apt upgrade -y
 
 # Checks to see what is already installed  what is not will be installed and logged
 echo "Installing essential packages..."
+echo ""
 echo "===== Installed on $(date) =====" >> installed_packages.txt
 for package in "${packages[@]}"; do
     echo "Checking if $package is installed..."
@@ -58,6 +61,7 @@ echo " Packages failed:    $(wc -l < error_log.txt 2>/dev/null)"
 # UFW setup
 echo " "
 echo "Setting up ufw firewall..."
+echo ""
 if dpkg -s ufw >/dev/null 2>&1; then
         declare -A ufw_rules=(
             [SSH]=22
@@ -74,10 +78,10 @@ if dpkg -s ufw >/dev/null 2>&1; then
         )   
     for service in "${!ufw_rules[@]}"; do
         port=${ufw_rules[$service]}
-        echo "Allowing $service on port $port"
         if ! sudo ufw status | grep -q "$port/tcp"; then
             sudo ufw allow "$port"/tcp
             echo "Allowed $service on port $port"
+            echo "-----------------------------------"
         else
             echo "$service on port $port is already allowed."
         fi
