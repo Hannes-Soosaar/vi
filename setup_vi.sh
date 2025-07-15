@@ -137,3 +137,16 @@ if [ -f error_log.txt ]; then
 else
     echo "Setup complete successfully. You can review the firewall settings from ufw_rules.txt and SSH status from ssh_status.txt."
 fi
+
+echo "Some updates may require a system restart to take full effect."
+echo "It's recommended to restart now to ensure all changes are applied."
+echo "IF you used SSH to run the setup choose YES."
+
+read -p "Would you like to restart the system now? (y/n): " restart_choice
+if [[ "$restart_choice" =~ ^[Yy]$ ]]; then
+    echo "Restarting system..."
+    sleep 2
+    sudo reboot
+else
+    echo "Please remember to manually restart the system later."
+fi
