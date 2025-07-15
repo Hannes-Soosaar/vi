@@ -33,7 +33,6 @@ echo "Updating package lists and upgrading installed packages..."
 # Update the package list and upgrade installed packages
 sudo apt update && sudo apt upgrade -y
 
-
 # Checks to see what is already installed  what is not will be installed and logged
 echo "Installing essential packages..."
 echo "===== Installed on $(date) =====" >> installed_packages.txt
@@ -55,8 +54,6 @@ for package in "${packages[@]}"; do
 done
 echo " Packages installed: $(wc -l < installed_packages.txt)"
 echo " Packages failed:    $(wc -l < error_log.txt 2>/dev/null)"
-
-
 
 # UFW setup
 echo " "
